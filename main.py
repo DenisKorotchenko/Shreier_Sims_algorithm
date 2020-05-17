@@ -1,7 +1,9 @@
+from functools import reduce
+
+
 class Permutation:
-    def __init__(self, n):
-        self.n = n
-        self.data = [i for i in range(n)]
+    def __init__(self, init_data):
+        self.data = init_data[::]
 
     def multi(self, other):
         for i in range(self.n):
@@ -15,6 +17,13 @@ class Permutation:
 
     def __str__(self):
         return self.data.__str__()
+
+
+def reverse(perm):
+    tmp = Permutation(perm.n)
+    for i in range(perm.n):
+        tmp.data[perm.data[i]] = i
+    return tmp
 
 
 class Node:
@@ -72,6 +81,32 @@ class ShreierTree:
         for node in self.nodes:
             print("{", self.nodes[node].parent, "<-", self.nodes[node].x, " : ", self.nodes[node].s, "}")
             print(self.nodes[node].children)
+
+
+class FullStableSequence:
+    def __init__(self, group, base):
+        self.n = group.n
+        self.base = base
+        self.generation
+        self.T
+
+# Применение перестановки b к перестановке a
+def apply(a, b):
+    tmp = Permutation(a.n)
+    for i in range(a.n):
+        tmp.data[i] = b.data[a.data[i]]
+    return tmp
+
+
+# Принимает порождающее множество для G_{w-1} и орбиту элемента w
+# Возвращает порождающее множество для G_w
+def make_gen(S, orbit):
+    n = len(next(iter(S)))
+    newS = set()
+    for s in S:
+        for u in orbit:
+            newS.add(reduce(apply, [reverse(orbit[s[u]]), s, orbit[u]]))
+    return newS
 
 
 def test():
