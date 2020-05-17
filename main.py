@@ -5,14 +5,14 @@ test()
 
 outputFile = open('answer.txt', 'w')
 
-N = 54
+cards = 54
 
 # наши образующие:
-swap1 = [Permutation([1, 0] + list(range(2, 54))), Permutation(list(range(1, 18)) + [0] + list(range(18, 54)))]
-swap2 = [Permutation(list(range(0, 18)) + [19, 18] + list(range(20, 54))), Permutation(list(range(0, 18)) + list(range(19, 36)) + [18] + list(range(36, 54)))]
-swap3 = [Permutation(list(range(0, 52)) + [53, 52]), Permutation(list(range(0, 36)) + list(range(37, 54)) + [36])]
-change = [Permutation(list(range(18, 36)) + list(range(0, 18)) + list(range(36, 54)))]
-visible = [Permutation(list(range(18, 36)) + list(range(2, 18)) + list(range(36, 54)) + [1, 0])]
+swap1 = [Permutation([1, 0] + list(range(2, cards))), Permutation(list(range(1, cards//3)) + [0] + list(range(cards//3, cards)))]
+swap2 = [Permutation(list(range(0, cards//3)) + [cards//3+1, cards//3] + list(range(cards//3+2, cards))), Permutation(list(range(0, cards//3)) + list(range(cards//3+1, cards//3*2)) + [cards//3] + list(range(cards//3*2, cards)))]
+swap3 = [Permutation(list(range(0, cards-2)) + [cards-1, cards-2]), Permutation(list(range(0, cards//3*2)) + list(range(cards//3*2+1, cards)) + [cards//3*2])]
+change = [Permutation(list(range(cards//3, cards//3*2)) + list(range(0, cards//3)) + list(range(cards//3*2, cards)))]
+visible = [Permutation(list(range(cards//3, cards//3*2)) + list(range(2, cards//3)) + list(range(cards//3*2, cards)) + [1, 0])]
 
 gen = set()
 gen.update(visible)
