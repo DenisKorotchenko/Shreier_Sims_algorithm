@@ -21,15 +21,6 @@ gen.update(swap2)
 gen.update(swap3)
 gen.update(visible)
 
-#Построение цепочки стабилизаторов
 G = FullStableChain(list(range(53)), list(gen))
 
-#Считаем размер группы
-#outputFile.write(str(myStab.get_group_size()) + '\n\n')
-
-#Считаем образующие стабилизатора. Вывод перестановки p в формате списка: p[i] = p(i)
-#fS = myStab.get_generations(2)
-#for sigma in fS:
-#    outputFile.write(str(sigma) + '\n')
-#outputFile.close()
 print(G.get_group_size())
