@@ -82,7 +82,7 @@ class FullStableChain:
     # строим полную цепочку стабилизаторов
     # вход: base - база, generations
     def __init__(self, base, generations):
-        self.base = base[::]
+        self.base = base
         if len(generations) == 0:
             self.n = 0
         else:
@@ -100,7 +100,7 @@ class FullStableChain:
         # проходим по всем образующим из нашей текущей подгруппы
         for gen in self.chain[i].generations:
             # идём по всем элементам орбиты
-            for a in self.chain[i].orbit:
+            for a in self.chain[i].orbit.keys():
                 # применяет лемму
                 ans.add(~self.chain[i].orbit[gen[a]] * gen * self.chain[i].orbit[a])
         return ans
@@ -141,9 +141,20 @@ class FullStableChain:
             ans *= len(t.orbit)
         return ans
 
-    # выдает элементы орбиты первого элемента базы как множество
-    def get_orbit(self):
-        return self.chain[0].orbit.keys()
+    # выдает элементы орбиты x
+    def get_orbit(self, x):
+        ans = {x}
+        bfs = [x]
+        ind = 0
+        while len(bfs) > ind:
+            t = bfs[ind]
+            for gen in self.chain[0].generations:
+                to = gen[t]
+                if not ans.__contains__(to):
+                    ans.add(to)
+                    bfs.append(to)
+            ind += 1
+        return ans
 
     # проверяет, содержится ли permutation в группе
     def contain(self, permutation):

@@ -3,24 +3,27 @@ from shreier_sims import *
 
 test()
 
-outputFile = open('answer.txt', 'w')
-
-cards = 54
+cards = 18
 
 # наши образующие:
-swap1 = [Permutation([1, 0] + list(range(2, cards))), Permutation(list(range(1, cards//3)) + [0] + list(range(cards//3, cards)))]
-swap2 = [Permutation(list(range(0, cards//3)) + [cards//3+1, cards//3] + list(range(cards//3+2, cards))), Permutation(list(range(0, cards//3)) + list(range(cards//3+1, cards//3*2)) + [cards//3] + list(range(cards//3*2, cards)))]
-swap3 = [Permutation(list(range(0, cards-2)) + [cards-1, cards-2]), Permutation(list(range(0, cards//3*2)) + list(range(cards//3*2+1, cards)) + [cards//3*2])]
-change = [Permutation(list(range(cards//3, cards//3*2)) + list(range(0, cards//3)) + list(range(cards//3*2, cards)))]
-visible = [Permutation(list(range(cards//3, cards//3*2)) + list(range(2, cards//3)) + list(range(cards//3*2, cards)) + [1, 0])]
+change = Permutation(list(range(cards//3, cards//3*2)) + list(range(0, cards//3)) + list(range(cards//3*2, cards)))
+visible = Permutation([cards-1, cards-2] + list(range(cards//3, cards//3*2-2)) + list(range(0, cards//3)) + list(range(cards//3*2-2, cards-2)))
 
-gen = set()
-gen.update(visible)
-gen.update(swap1)
-gen.update(swap2)
-gen.update(swap3)
-gen.update(visible)
+print(change.data)
+print(visible.data)
 
-G = FullStableChain(list(range(53)), list(gen))
+G = FullStableChain(list(range(cards-1)), list({change, visible}))
+#genS54 = {Permutation(list(range(1, 54)) + [0]), Permutation([1, 0] + list(range(2, 54)))}
+#G = FullStableChain(list(range(53)), list(genS54))
+
+
+cards_pairs = cards//2
+change_pairs = Permutation(list(range(cards_pairs//3, cards_pairs//3*2)) + list(range(cards_pairs//3)) + list(range(cards_pairs//3*2, cards_pairs)))
+visible_pairs = Permutation([cards_pairs-1] + list(range(cards_pairs//3, cards_pairs//3*2-1)) + list(range(cards_pairs//3)) + list(range(cards_pairs//3*2-1, cards_pairs-1)))
+
+G_pairs = FullStableChain(list(range(cards_pairs-1)), list({change_pairs, visible_pairs}))
+
+print(G.contain(Permutation([1, 0] + list(range(2, cards)))))
 
 print(G.get_group_size())
+print(G_pairs.get_group_size() * (2**cards_pairs))
