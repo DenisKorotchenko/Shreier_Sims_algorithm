@@ -3,7 +3,7 @@ from shreier_sims import *
 
 test()
 
-cards = 18
+cards = 54
 
 # наши образующие:
 change = Permutation(list(range(cards//3, cards//3*2)) + list(range(0, cards//3)) + list(range(cards//3*2, cards)))

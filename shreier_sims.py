@@ -80,7 +80,7 @@ class ShreierTree:
 # ========================
 class FullStableChain:
     # строим полную цепочку стабилизаторов
-    # вход: base - база, generations
+    # вход: base - база, generations - образующие группы
     def __init__(self, base, generations):
         self.base = base
         if len(generations) == 0:
@@ -133,7 +133,7 @@ class FullStableChain:
     def get_generations(self, i):
         return self.chain[i].generations
 
-    # для данной цепочки стабилизаторов вернуть размер соответствующей группы
+    # для данной цепочки стабилизаторов возвращает размер соответствующей группы
     def get_group_size(self):
         ans = 1
         # len(t.orbit) - размер конкретного дерева в цепи
@@ -141,7 +141,7 @@ class FullStableChain:
             ans *= len(t.orbit)
         return ans
 
-    # выдает элементы орбиты x
+    # возвращает элементы орбиты элемента x
     def get_orbit(self, x):
         ans = {x}
         bfs = [x]
